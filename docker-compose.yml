@@ -51,8 +51,8 @@ services:
     volumes:
       # Montamos las credenciales de AWS (solo lectura)
       - ~/.aws:/root/.aws:ro
-      # Montamos las llaves GPG (solo lectura)
-      - ~/.gnupg:/root/.gnupg:ro
+      # Montamos las llaves GPG
+      - ~/.gnupg:/root/.gnupg
       # Montamos el mismo directorio de backups que Nextcloud para que el script pueda escribir en él
       - ./backups:/backups
     environment:
