@@ -26,7 +26,7 @@ LOCAL_ENCRYPTED_PATH="${LOCAL_TEMP_DIR}/${ENCRYPTED_FILENAME}"
 
 # 1. Crear el respaldo de la base de datos
 echo "INFO: [1/5] Creando dump de la base de datos '${DB_NAME}'..."
-mysqldump -h "${DB_HOST}" -u "${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" > "${LOCAL_BACKUP_PATH}"
+mysqldump --ssl-mode=DISABLED -h "${DB_HOST}" -u "${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" > "${LOCAL_BACKUP_PATH}"
 echo "SUCCESS: Dump de la base de datos creado en ${LOCAL_BACKUP_PATH}"
 
 # 2. Cifrar el respaldo con GPG
