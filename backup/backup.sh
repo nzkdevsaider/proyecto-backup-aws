@@ -45,7 +45,7 @@ echo "SUCCESS: Sincronización con el volumen de Nextcloud completada."
 
 # 5. Subir el respaldo cifrado a AWS S3
 echo "INFO: [5/5] Subiendo respaldo a AWS S3 Bucket '${S3_BUCKET}'..."
-aws s3 cp "${LOCAL_ENCRYPTED_PATH}" "${S3_BUCKET}"
+aws s3 cp "${LOCAL_ENCRYPTED_PATH}" "s3://${S3_BUCKET}"
 echo "SUCCESS: Subida a AWS S3 completada."
 
 # Limpieza final del archivo cifrado temporal
