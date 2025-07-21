@@ -1,0 +1,22 @@
+# Archivos de configuración sensibles
+.env
+.aws/credentials
+
+# Datos de contenedores
+db_data/
+nextcloud_data/
+
+# Archivos de respaldo locales
+backups/*.sql
+backups/*.gpg
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
