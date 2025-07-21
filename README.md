@@ -1,6 +1,6 @@
 # Proyecto de Backup Automatizado a AWS
 
-Este proyecto implementa un sistema automatizado de respaldo para Nextcloud que cifra las bases de datos y las almacena en AWS S3.
+Sistema automatizado de respaldo para Nextcloud que cifra las bases de datos y las almacena en AWS S3.
 
 ## Requisitos escenciales
 
@@ -87,3 +87,7 @@ docker-compose run --build backup-runner
 ```
 
 Si deseas programarlo para que se haga durante un tiempo determinado, usa el comando crontab -e y configura la sentencia.
+
+## Agradecimientos
+
+Este es un proyecto que fue propuesto por el Dr. Santiago Quintero para examen semestral de la asignatura Tópicos Especiales I de la Universidad Tecnológica de Panamá. De la cual destaco que pude experimentar y expandir más mis conocimientos en Docker y AWS, y sobre DevOps en general.
