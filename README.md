@@ -2,7 +2,12 @@
 
 Este proyecto implementa un sistema automatizado de respaldo para Nextcloud que cifra las bases de datos y las almacena en AWS S3.
 
-## 🏗️ Arquitectura
+## Requisitos escenciales
+
+- Docker
+- Un bucket S3 en AWS
+
+## Arquitectura
 
 El proyecto utiliza Docker Compose para orquestar tres servicios principales:
 
@@ -10,9 +15,9 @@ El proyecto utiliza Docker Compose para orquestar tres servicios principales:
 - **Nextcloud**: Plataforma de almacenamiento en la nube
 - **Backup Runner**: Contenedor que ejecuta respaldos automatizados
 
-## 🔧 Configuración
+## Configuración
 
-### 1. Archivo de Variables de Entorno
+### Archivo de Variables de Entorno
 
 Crea un archivo `.env` con las siguientes variables:
 
@@ -33,7 +38,7 @@ S3_BUCKET=nombre_de_tu_bucket
 DB_HOST=db
 ```
 
-### 2. Credenciales AWS
+### Credenciales AWS
 
 Configura tus credenciales AWS en `~/.aws/credentials`:
 
@@ -45,7 +50,7 @@ aws_secret_access_key = TU_SECRET_KEY
 
 ### 3. Llaves GPG
 
-Debes de tener configuradas las llaves GPG en `~/.gnupg/` para el cifrado de los respaldos.
+Debes de tener configuradas las llaves GPG en `~/.gnupg/` para el cifrado de los respaldos. Recuerda que debe coincidir con el correo eléctronico que vas a colocar en GPG_RECIPIENT.
 
 ## 🚀 Uso
 
@@ -67,10 +72,18 @@ docker-compose run backup-runner
 docker-compose down
 ```
 
-## 🔄 Automatización
+## Automatización
 
 Para automatizar los respaldos, puedes configurar un cron job que ejecute:
 
 ```bash
 cd /ruta/al/proyecto && docker-compose run backup-runner
 ```
+
+Si realizaste un cambio local en el archivo backup.sh por tu cuenta, recuerda buildear de nuevo el contenedor donde se encuentra el backup-runner.
+
+```bash
+docker-compose run --build backup-runner
+```
+
+Si deseas programarlo para que se haga durante un tiempo determinado, usa el comando crontab -e y configura la sentencia.
