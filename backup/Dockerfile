@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-# Metadatos
+# Metadatos (cambiar por preferencias locales)
 LABEL author="Sebastián Morales"
 LABEL project="Contenedor de Respaldos a AWS S3"
 
