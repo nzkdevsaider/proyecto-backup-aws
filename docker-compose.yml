@@ -1,17 +1,15 @@
-version: "3.8"
+# docker-compose.yml
+# Se ha eliminado la línea 'version' por ser obsoleta
 
-# Definición de los servicios (contenedores)
 services:
-  # Servicio de la Base de Datos
   db:
-    image: mariadb:10.5 # Usamos una imagen oficial de MariaDB
+    image: mariadb:10.5
     container_name: mariadb_db
-    restart: always # Siempre reiniciar el contenedor si se detiene
+    restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - db_data:/var/lib/mysql # Monta un volumen para persistir los datos de la BD
+      - db_data:/var/lib/mysql
     environment:
-      # Carga las variables desde el archivo .env
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -19,44 +17,36 @@ services:
     networks:
       - app-network
 
-  # Servicio de Nextcloud
   nextcloud:
-    image: nextcloud:latest # Usamos la imagen oficial de Nextcloud
+    image: nextcloud:latest
     container_name: nextcloud_app
     restart: always
     ports:
-      - "8080:80" # Mapea el puerto 8080 del host al 80 del contenedor
+      - "8080:80"
     volumes:
-      # Monta un volumen para los datos de Nextcloud
       - nextcloud_data:/var/www/html
-      # Montamos un directorio local para que el script de backup pueda dejar los archivos
       - ./backups:/var/www/html/data/admin/files/Backups
     environment:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_HOST=db # Apunta al servicio 'db'
+      - MYSQL_HOST=db
     depends_on:
-      - db # Indica que este servicio depende de la base de datos
+      - db
     networks:
       - app-network
 
-  # Servicio que ejecuta nuestro script de respaldo
   backup-runner:
-    # Construye la imagen desde el directorio 'backup'
     build: ./backup
     container_name: backup_runner_instance
-    # No reiniciar, es una tarea que se ejecuta y termina
     restart: "no"
     volumes:
       # Montamos las credenciales de AWS (solo lectura)
       - ~/.aws:/root/.aws:ro
-      # Montamos las llaves GPG
-      - ~/.gnupg:/root/.gnupg
-      # Montamos el mismo directorio de backups que Nextcloud para que el script pueda escribir en él
+      - ./my-public-key.asc:/app/my-public-key.asc:ro
+      # Montamos el directorio de backups
       - ./backups:/backups
     environment:
-      # Pasamos las variables de entorno necesarias para el script
       - GPG_RECIPIENT=${GPG_RECIPIENT}
       - S3_BUCKET=${S3_BUCKET}
       - DB_HOST=${DB_HOST}
@@ -69,12 +59,10 @@ services:
     networks:
       - app-network
 
-# Definición de volúmenes para persistencia de datos
 volumes:
   db_data:
   nextcloud_data:
 
-# Definición de la red para que los contenedores se comuniquen
 networks:
   app-network:
     driver: bridge
