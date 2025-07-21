@@ -31,7 +31,7 @@ echo "SUCCESS: Dump de la base de datos creado en ${LOCAL_BACKUP_PATH}"
 
 # 2. Cifrar el respaldo con GPG
 echo "INFO: [2/5] Cifrando el respaldo para el destinatario '${GPG_RECIPIENT}'..."
-gpg --encrypt --recipient "${GPG_RECIPIENT}" --output "${LOCAL_ENCRYPTED_PATH}" "${LOCAL_BACKUP_PATH}"
+gpg --trust-model always --encrypt --recipient "${GPG_RECIPIENT}" --output "${LOCAL_ENCRYPTED_PATH}" "${LOCAL_BACKUP_PATH}"
 echo "SUCCESS: Respaldo cifrado creado en ${LOCAL_ENCRYPTED_PATH}"
 
 # 3. Eliminar el archivo de respaldo sin cifrar por seguridad
